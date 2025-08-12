@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next.js Learning - Master the Fundamentals</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 10px auto;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: #000;
+            background: #fff;
+            font-family: inherit;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            line-height: 2rem;
+            font-weight: 700;
+        }
+
+        nav p {
+            color: #dbeafe;
+        }
+
+        /* Main content */
+        main {
+            padding: 1rem;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            line-height: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Utility Classes */
+        .space-y-8 > * + * {
+            margin-top: 2rem;
+        }
+
+        .space-y-4 > * + * {
+            margin-top: 1rem;
+        }
+
+        .space-y-2 > * + * {
+            margin-top: 0.5rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-4xl {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .max-w-3xl {
+            max-width: 48rem;
+        }
+
+        /* Grid and Layout */
+        .grid {
+            display: grid;
+        }
+
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .md\:grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .lg\:grid-cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        .gap-6 {
+            gap: 1.5rem;
+        }
+
+        /* Text colors */
+        .text-gray-900 {
+            color: #111827;
+        }
+
+        .text-gray-600 {
+            color: #4b5563;
+        }
+
+        .text-blue-600 {
+            color: #2563eb;
+        }
+
+        .text-green-600 {
+            color: #16a34a;
+        }
+
+        .text-purple-600 {
+            color: #9333ea;
+        }
+
+        .text-orange-600 {
+            color: #ea580c;
+        }
+
+        .text-red-600 {
+            color: #dc2626;
+        }
+
+        .text-indigo-600 {
+            color: #4f46e5;
+        }
+
+        .text-blue-100 {
+            color: #dbeafe;
+        }
+
+        .text-blue-800 {
+            color: #1e40af;
+        }
+
+        .text-green-800 {
+            color: #166534;
+        }
+
+        .text-yellow-800 {
+            color: #92400e;
+        }
+
+        .text-yellow-700 {
+            color: #a16207;
+        }
+
+        /* Card styles */
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .bg-blue-50 {
+            background-color: #eff6ff;
+        }
+
+        .bg-green-50 {
+            background-color: #f0fdf4;
+        }
+
+        .bg-yellow-50 {
+            background-color: #fefce8;
+        }
+
+        .border-yellow-200 {
+            border-color: #fde68a;
+        }
+
+        .border-l-4 {
+            border-left-width: 4px;
+        }
+
+        .border-blue-500 {
+            border-color: #3b82f6;
+        }
+
+        .border-green-500 {
+            border-color: #22c55e;
+        }
+
+        .border-purple-500 {
+            border-color: #a855f7;
+        }
+
+        .border-orange-500 {
+            border-color: #f97316;
+        }
+
+        .pl-4 {
+            padding-left: 1rem;
+        }
+
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            background-color: #2563eb;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s ease-in-out;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background-color: #6b7280;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4b5563;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+        }
+
+        /* Background utilities */
+        .bg-gray-100 {
+            background-color: #f3f4f6;
+        }
+
+        .bg-blue-50 {
+            background-color: #eff6ff;
+        }
+
+        .bg-green-50 {
+            background-color: #f0fdf4;
+        }
+
+        .p-4 {
+            padding: 1rem;
+        }
+
+        .p-2 {
+            padding: 0.5rem;
+        }
+
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+
+        .rounded {
+            border-radius: 0.25rem;
+        }
+
+        /* Code styling */
+        pre {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        code {
+            background: #f3f4f6;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+        }
+
+        /* Navigation menu */
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .nav-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Page sections */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .md\:grid-cols-2 {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+            
+            .lg\:grid-cols-3 {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+            
+            .text-4xl {
+                font-size: 1.875rem;
+                line-height: 2.25rem;
+            }
+            
+            .container {
+                padding: 0 0.5rem;
+            }
+        }
+
+        /* Interactive elements */
+        .interactive-counter {
+            background: #eff6ff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .counter-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2563eb;
+            margin: 0.5rem 0;
+        }
+
+        .counter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f3f4f6;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+        }
+
+        .back-to-top:hover {
+            background: #1d4ed8;
+        }
+
+        .back-to-top.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <h1>Next.js Learning Journey</h1>
+            <p>Master the fundamentals step by step</p>
+            <div class="nav-menu">
+                <a href="#" onclick="showPage('home')">🏠 Home</a>
+                <a href="#" onclick="showPage('routing')">📁 Routing</a>
+                <a href="#" onclick="showPage('components')">🧩 Components</a>
+                <a href="#" onclick="showPage('data-fetching')">📡 Data Fetching</a>
+                <a href="#" onclick="showPage('styling')">🎨 Styling</a>
+                <a href="#" onclick="showPage('state-management')">⚡ State Management</a>
+                <a href="#" onclick="showPage('deployment')">🚀 Deployment</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Home Page -->
+        <div id="home" class="page-section active">
+            <div class="space-y-8">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                        Welcome to Next.js! 🚀
+                    </h1>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        This project will teach you Next.js concepts step by step. Each section builds upon the previous one,
+                        giving you a solid foundation in modern web development with Next.js.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card">
+                        <h2 class="text-2xl font-bold text-blue-600">1. Pages & Routing</h2>
+                        <p>Learn how Next.js handles file-based routing and creates pages automatically.</p>
+                        <div class="mt-4">
+                            <button onclick="showPage('routing')" class="btn">Learn Routing</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="text-2xl font-bold text-green-600">2. Components & Layouts</h2>
+                        <p>Understand React components, layouts, and how to structure your Next.js app.</p>
+                        <div class="mt-4">
+                            <button onclick="showPage('components')" class="btn">Learn Components</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="text-2xl font-bold text-purple-600">3. Data Fetching</h2>
+                        <p>Master different ways to fetch data: getStaticProps, getServerSideProps, and API routes.</p>
+                        <div class="mt-4">
+                            <button onclick="showPage('data-fetching')" class="btn">Learn Data Fetching</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="text-2xl font-bold text-orange-600">4. Styling</h2>
+                        <p>Explore CSS modules, styled-components, and other styling approaches in Next.js.</p>
+                        <div class="mt-4">
+                            <button onclick="showPage('styling')" class="btn">Learn Styling</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="text-2xl font-bold text-red-600">5. State Management</h2>
+                        <p>Learn about React hooks, context, and state management patterns in Next.js.</p>
+                        <div class="mt-4">
+                            <button onclick="showPage('state-management')" class="btn">Learn State</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="text-2xl font-bold text-indigo-600">6. Deployment</h2>
+                        <p>Deploy your Next.js app to Vercel, Netlify, or other platforms.</p>
+                        <div class="mt-4">
+                            <button onclick="showPage('deployment')" class="btn">Learn Deployment</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-blue-50">
+                    <h2 class="text-xl font-bold text-blue-800">Ready to Start?</h2>
+                    <p class="text-blue-700">
+                        Click on any concept above to begin learning! Each section includes practical examples,
+                        code explanations, and interactive elements to help you understand Next.js thoroughly.
+                    </p>
+                    <div class="mt-4">
+                        <button onclick="showPage('routing')" class="btn">
+                            Start with Routing →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Routing Page -->
+        <div id="routing" class="page-section">
+            <div class="space-y-8">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold text-blue-600 mb-4">
+                        📁 Next.js File-Based Routing
+                    </h1>
+                    <p class="text-xl text-gray-600">
+                        Learn how Next.js automatically creates routes based on your file structure
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4">How File-Based Routing Works</h2>
+                    <p class="mb-4">
+                        In Next.js, the file system is used to create routes. Each folder represents a route segment,
+                        and each file represents a route. This is called <strong>file-based routing</strong>.
+                    </p>
+                    
+                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                        <h3 class="font-bold mb-2">File Structure Example:</h3>
+                        <pre>
+app/
+├── page.tsx              → / (home page)
+├── routing/
+│   ├── page.tsx          → /routing
+│   ├── dynamic/
+│   │   ├── page.tsx      → /routing/dynamic
+│   │   └── [id]/
+│   │       └── page.tsx  → /routing/dynamic/[id]
+│   └── nested/
+│       └── page.tsx      → /routing/nested
+└── api/
+    └── hello/
+        └── route.ts      → /api/hello
+                        </pre>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-blue-800">Static Routes</h3>
+                            <p class="text-sm text-blue-700">
+                                Regular folders and files create static routes that are always accessible.
+                            </p>
+                        </div>
+                        
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-green-800">Dynamic Routes</h3>
+                            <p class="text-sm text-green-700">
+                                Folders with [brackets] create dynamic routes that can accept parameters.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4">Route Types Explained</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h3 class="font-bold text-blue-600">1. Static Routes</h3>
+                            <p>Regular folders and files create predictable, always-accessible routes.</p>
+                            <code>/routing/nested</code>
+                        </div>
+                        
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h3 class="font-bold text-green-600">2. Dynamic Routes</h3>
+                            <p>Routes with parameters that can change based on user input or data.</p>
+                            <code>/routing/dynamic/[id]</code>
+                        </div>
+                        
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h3 class="font-bold text-purple-600">3. Catch-All Routes</h3>
+                            <p>Routes that can match multiple segments using [...param] syntax.</p>
+                            <code>/routing/[...slug]</code>
+                        </div>
+                        
+                        <div class="border-l-4 border-orange-500 pl-4">
+                            <h3 class="font-bold text-orange-600">4. Optional Catch-All Routes</h3>
+                            <p>Routes that can match multiple segments but are optional using [[...param]].</p>
+                            <code>/routing/[[...slug]]</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-yellow-50">
+                    <h2 class="text-xl font-bold text-yellow-800">💡 Key Takeaways</h2>
+                    <ul class="text-yellow-700 space-y-2">
+                        <li>File structure = URL structure</li>
+                        <li>[brackets] create dynamic routes</li>
+                        <li>Use Link component for navigation</li>
+                        <li>Routes are automatically created</li>
+                        <li>No manual route configuration needed</li>
+                    </ul>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="showPage('home')" class="btn btn-secondary">
+                        ← Back to Home
+                    </button>
+                    <button onclick="showPage('components')" class="btn">
+                        Next: Components →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Components Page -->
+        <div id="components" class="page-section">
+            <div class="space-y-8">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold text-green-600 mb-4">
+                        🧩 React Components in Next.js
+                    </h1>
+                    <p class="text-xl text-gray-600">
+                        Learn how to create and use React components to build your Next.js application
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4">What are React Components?</h2>
+                    <p class="mb-4">
+                        React components are reusable pieces of UI that can contain their own logic, state, and styling.
+                        In Next.js, you use React components to build your pages and create a modular, maintainable codebase.
+                    </p>
+                    
+                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                        <h3 class="font-bold mb-2">Component Structure:</h3>
+                        <pre>
+function MyComponent() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Hello World&lt;/h1&gt;
+      &lt;p&gt;This is a React component&lt;/p&gt;
+    &lt;/div&gt;
+  )
+}
+
+export default MyComponent
+                        </pre>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-green-800">Reusable</h3>
+                            <p class="text-sm text-green-700">
+                                Create once, use anywhere in your application
+                            </p>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-blue-800">Maintainable</h3>
+                            <p class="text-sm text-blue-700">
+                                Easy to update and debug individual pieces
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4">Interactive Example</h2>
+                    <div class="interactive-counter">
+                        <h3 class="font-bold text-blue-800 mb-2">Interactive Counter</h3>
+                        <div class="counter-display" id="counter">0</div>
+                        <div class="counter-buttons">
+                            <button onclick="decreaseCounter()" class="btn btn-secondary text-sm">
+                                Decrease
+                            </button>
+                            <button onclick="increaseCounter()" class="btn text-sm">
+                                Increase
+                            </button>
+                            <button onclick="resetCounter()" class="btn btn-secondary text-sm">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="showPage('routing')" class="btn btn-secondary">
+                        ← Back to Routing
+                    </button>
+                    <button onclick="showPage('data-fetching')" class="btn">
+                        Next: Data Fetching →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Fetching Page -->
+        <div id="data-fetching" class="page-section">
+            <div class="space-y-8">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold text-purple-600 mb-4">
+                        📡 Data Fetching in Next.js
+                    </h1>
+                    <p class="text-xl text-gray-600">
+                        Learn different ways to fetch and manage data in your Next.js application
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4">Data Fetching Methods</h2>
+                    <p class="mb-4">
+                        Next.js provides several ways to fetch data depending on when and how you need it.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h3 class="font-bold text-blue-600">1. Server Components</h3>
+                            <p>Fetch data directly in server components for better performance.</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h3 class="font-bold text-green-600">2. API Routes</h3>
+                            <p>Create API endpoints in <code>app/api/</code> directory.</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h3 class="font-bold text-purple-600">3. Client-side Fetching</h3>
+                            <p>Use SWR or React Query for client-side data fetching with caching.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4">API Route Example</h2>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <h3 class="font-bold mb-2">Example API Route:</h3>
+                        <pre>
+export default function handler(req, res) {
+  res.status(200).json({ 
+    message: 'Hello from API!' 
+  });
+}
+                        </pre>
+                    </div>
+                    <button onclick="testAPI()" class="btn mt-4">Test API Call</button>
+                    <div id="api-result" class="mt-4"></div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="showPage('components')" class="btn btn-secondary">
+                        ← Back to Components
+                    </button>
+                    <button onclick="showPage('styling')" class="btn">
+                        Next: Styling →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Styling Page -->
+        <div id="styling" class="page-section">
+            <div class="space-y-8">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold text-orange-600 mb-4">
+                        🎨 Styling in Next.js
+                    </h1>
+                    <p class="text-xl text-gray-600">
+                        Explore different styling approaches and CSS frameworks
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4">Styling Approaches</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-orange-800">CSS Modules</h3>
+                            <p class="text-sm text-orange-700">
+                                Scoped CSS with automatic class name generation
+                            </p>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-blue-800">Tailwind CSS</h3>
+                            <p class="text-sm text-blue-700">
+                                Utility-first CSS framework for rapid development
+                            </p>
+                        </div>
+                        
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-purple-800">Styled Components</h3>
+                            <p class="text-sm text-purple-700">
+                                CSS-in-JS solution for component-based styling
+                            </p>
+                        </div>
+                        
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-green-800">Global CSS</h3>
+                            <p class="text-sm text-green-700">
+                                Traditional CSS files for global styles
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="showPage('data-fetching')" class="btn btn-secondary">
+                        ← Back to Data Fetching
+                    </button>
+                    <button onclick="showPage('state-management')" class="btn">
+                        Next: State Management →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- State Management Page -->
+        <div id="state-management" class="page-section">
+            <div class="space-y-8">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold text-red-600 mb-4">
+                        ⚡ State Management in Next.js
+                    </h1>
+                    <p class="text-xl text-gray-600">
+                        Learn about React hooks and state management patterns
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4">State Management Options</h2>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h3 class="font-bold text-red-600">1. useState Hook</h3>
+                            <p>Manage local component state with React's built-in hook.</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h3 class="font-bold text-blue-600">2. useContext Hook</h3>
+                            <p>Share state across components without prop drilling.</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h3 class="font-bold text-green-600">3. useReducer Hook</h3>
+                            <p>Manage complex state logic with reducer pattern.</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h3 class="font-bold text-purple-600">4. External Libraries</h3>
+                            <p>Use Zustand, Redux, or other state management solutions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="showPage('styling')" class="btn btn-secondary">
+                        ← Back to Styling
+                    </button>
+                    <button onclick="showPage('deployment')" class="btn">
+                        Next: Deployment →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deployment Page -->
+        <div id="deployment" class="page-section">
+            <div class="space-y-8">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold text-indigo-600 mb-4">
+                        🚀 Deployment in Next.js
+                    </h1>
+                    <p class="text-xl text-gray-600">
+                        Deploy your Next.js application to various platforms
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4">Deployment Platforms</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-indigo-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-indigo-800">Vercel (Recommended)</h3>
+                            <p class="text-sm text-indigo-700">
+                                Zero-config deployment from the creators of Next.js
+                            </p>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-blue-800">Netlify</h3>
+                            <p class="text-sm text-blue-700">
+                                Static site hosting with continuous deployment
+                            </p>
+                        </div>
+                        
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-green-800">Docker</h3>
+                            <p class="text-sm text-green-700">
+                                Containerized deployment for self-hosting
+                            </p>
+                        </div>
+                        
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-orange-800">Self-hosted</h3>
+                            <p class="text-sm text-orange-700">
+                                Custom server setup with full control
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="showPage('state-management')" class="btn btn-secondary">
+                        ← Back to State Management
+                    </button>
+                    <button onclick="showPage('home')" class="btn">
+                        Back to Home →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Next.js Learning Project. Built with ❤️ and Next.js.</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" onclick="scrollToTop()" title="Back to top">↑</button>
+
+    <script>
+        // Global variables
+        let currentPage = 'home';
+        let counter = 0;
+
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            currentPage = pageId;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Update navigation
+            updateNavigation();
+        }
+
+        // Update navigation highlighting
+        function updateNavigation() {
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.style.backgroundColor = '';
+            });
+            
+            const activeLink = document.querySelector(`[onclick="showPage('${currentPage}')"]`);
+            if (activeLink) {
+                activeLink.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+            }
+        }
+
+        // Counter functionality
+        function increaseCounter() {
+            counter++;
+            updateCounterDisplay();
+        }
+
+        function decreaseCounter() {
+            counter--;
+            updateCounterDisplay();
+        }
+
+        function resetCounter() {
+            counter = 0;
+            updateCounterDisplay();
+        }
+
+        function updateCounterDisplay() {
+            document.getElementById('counter').textContent = counter;
+        }
+
+        // API test function
+        function testAPI() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.innerHTML = '<p class="text-green-600">✅ API call simulated successfully!</p>';
+            
+            // Simulate API response
+            setTimeout(() => {
+                resultDiv.innerHTML = '<p class="text-blue-600">📡 Response: { "message": "Hello from API!", "status": "success" }</p>';
+            }, 1000);
+        }
+
+        // Back to top functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTopBtn = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateNavigation();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                showPage('home');
+            }
+        });
+    </script>
+</body>
+</html>
